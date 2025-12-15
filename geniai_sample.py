@@ -743,9 +743,3 @@ else:
     main_app()
 
 
-st.markdown("---")
-st.markdown(
-    '<p style="text-align: center; color: rgba(255,255,255,0.9); font-weight: 500; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">💻 Developed for Generative AI FA-2 Project • Powered by Gemini AI</p>',
-    unsafe_allow_html=True
-)
-
