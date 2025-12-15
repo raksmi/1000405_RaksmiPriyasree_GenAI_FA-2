@@ -377,7 +377,7 @@ Provide precise pest and disease management advice including:
 5. Economic threshold levels
 6. Follow-up monitoring schedule
 
-Be specific about timing, dosages, and safety precautions.and dont add any bold charecters, in 250 words""",
+Be specific about timing, dosages, and safety precautions.and dont add any bold charecters, in 300 words""",
 
         'soil_health': f"""You are a soil scientist specializing in sustainable agriculture in tamilnadu,india.
 {base_context}
@@ -389,7 +389,7 @@ Provide comprehensive soil health improvement advice including:
 5. Crop rotation suggestions
 6. Expected timeline for improvements
 
-Prioritize sustainable, cost-effective solutions.and dont add any bold charecters, in 250 words""",
+Prioritize sustainable, cost-effective solutions.and dont add any bold charecters, in 300 words""",
 
         'water_efficiency': f"""You are an irrigation specialist and water conservation expert in tamilnadu,india.
 {base_context}
@@ -401,7 +401,7 @@ Provide water optimization strategies including:
 5. Crop-specific water requirements
 6. Cost-benefit analysis of different systems
 
-Focus on practical, implementable solutions for small to medium farmers.and dont add any bold charecters, in 250 words""",
+Focus on practical, implementable solutions for small to medium farmers.and dont add any bold charecters, in 300 words""",
 
         'crop_insurance': f"""You are a crop insurance advisor and agricultural economist in tamilnadu,india.
 {base_context}
@@ -413,7 +413,7 @@ Provide crop insurance guidance including:
 5. Government schemes available
 6. Premium vs. coverage analysis
 
-Include specific policy names and eligibility criteria.and dont add any bold charecters, in 250 words"""
+Include specific policy names and eligibility criteria.and dont add any bold charecters, in 300 words"""
     }
     
     prompt = prompts.get(challenge_type, prompts['pest_disease'])
@@ -748,3 +748,4 @@ st.markdown(
     '<p style="text-align: center; color: rgba(255,255,255,0.9); font-weight: 500; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);">💻 Developed for Generative AI FA-2 Project • Powered by Gemini AI</p>',
     unsafe_allow_html=True
 )
+
