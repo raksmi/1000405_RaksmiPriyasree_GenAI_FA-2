@@ -638,7 +638,7 @@ def main_app():
                            st.session_state.language
                        )
                       
-                        model = genai.GenerativeModel("models/gemini-2.5-flash")
+                    model = genai.GenerativeModel("models/gemini-2.5-flash")
                         response = model.generate_content(
                             prompt,
                             generation_config=genai.types.GenerationConfig(
@@ -752,6 +752,7 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
 
