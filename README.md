@@ -1,5 +1,6 @@
 # 1000405_RaksmiPriyasree_GenAI_FA-2
 🌾 AgriSoul – Smart Farming & Wellbeing Assistant
+Streamlit Link: https://1000405raksmipriyasreegenaifa-2-gqnab7ghdcvc8dtcm2eus3.streamlit.app/
 
 AgriSoul is an AI-powered Streamlit web application designed to support farmers with precision farming guidance, mental health support, multilingual interaction, and voice-based responses, powered by Google Gemini AI.
 
