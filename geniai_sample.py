@@ -625,7 +625,7 @@ def main_app():
             
             st.markdown('</div>', unsafe_allow_html=True)
             
-           if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
+            if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
                with st.spinner("🌱 Generating advice..."):
                    try:
                        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
@@ -752,6 +752,7 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
 
