@@ -48,14 +48,6 @@ AI responses converted to speech using gTTS
 
 Supports both English and Tamil audio output
 
-🔐 User Authentication
-
-Secure login & registration
-
-Password hashing using SHA-256
-
-Personalized user data (location, crops, language)
-
 🧑‍🌾 Target Users
 
 Small and medium-scale farmers
@@ -88,9 +80,6 @@ Crop Insurance Advisor
 
 Mental Health Counselor
 
-
-4️⃣ Run the App
-streamlit run app.py
 
 🧪 Supported Farming Challenges
 
