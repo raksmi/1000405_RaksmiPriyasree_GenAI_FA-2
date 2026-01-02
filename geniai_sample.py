@@ -422,50 +422,25 @@ Include specific policy names and eligibility criteria.and dont add any bold cha
     return prompt
 
 
-def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
-    """Safely get response from Gemini API with comprehensive error handling."""
+def get_gemini_response(prompt, temperature=0.3, max_tokens=3000):
     try:
-        model = genai.GenerativeModel(models/gemini-2.5-flash)
-
-        safety_settings = [
-            {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-            {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
-        ]
+        model = genai.GenerativeModel(
+            model_name="models/gemini-2.5-flash"
+        )
 
         response = model.generate_content(
             prompt,
-            generation_config=genai.types.GenerationConfig(
-                temperature=temperature,
-                max_output_tokens=max_tokens,
-                candidate_count=1,
-            ),
-            safety_settings=safety_settings
+            generation_config={
+                "temperature": temperature,
+                "max_output_tokens": max_tokens,
+            }
         )
 
-        if response.candidates:
-            candidate = response.candidates[0]
-            if candidate.finish_reason == 1:
-                if hasattr(candidate, "text") and candidate.text:
-                    return candidate.text
-                elif hasattr(candidate.content, "parts") and candidate.content.parts:
-                    return candidate.content.parts[0].text
-                else:
-                    return None
-            elif candidate.finish_reason == 2:
-                st.warning("⚠️ Gemini: Response blocked or incomplete (possibly safety/max tokens).")
-                return None
-            else:
-                st.warning(f"⚠️ Gemini: Finish reason {candidate.finish_reason} -- response may be incomplete.")
-                return None
-        else:
-            st.error("❌ Gemini: No valid response received.")
-            return None
-    except Exception as e:
-        st.error(f"❌ Error from Gemini: {str(e)}")
-        return None
+        return response.text if response and response.text else None
 
+    except Exception as e:
+        st.error(f"❌ Gemini Error: {e}")
+        return None
 
 def login_page():
     """Renders the login and registration interface."""
@@ -622,17 +597,15 @@ def main_app():
                         )
                         
                         # Note: Changed to gemini-1.5-flash as 2.5 is not current
-                        model = genai.GenerativeModel("models/gemini-2.5-flash")
-                        response = model.generate_content(
-                            prompt,
-                            generation_config=genai.types.GenerationConfig(
-                                temperature=FIXED_TEMPERATURE,
-                                max_output_tokens=FIXED_MAX_TOKENS,
-                            )
-                        )
-                        
-                        advice_text = response.text if response.text else "No response received."
-                        st.session_state.farming_advice = advice_text
+                       advice_text = get_gemini_response(
+    prompt,
+    temperature=FIXED_TEMPERATURE,
+    max_tokens=FIXED_MAX_TOKENS
+)
+
+if not advice_text:
+    st.error("❌ No response from Gemini")
+    return
                         
                         # Audio Generation
                         lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
@@ -752,5 +725,6 @@ else:
 
 
  
+
 
 
