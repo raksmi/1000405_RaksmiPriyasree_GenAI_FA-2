@@ -622,7 +622,7 @@ def main_app():
                         )
                         
                         # Note: Changed to gemini-1.5-flash as 2.5 is not current
-                        model = genai.GenerativeModel("models/gemini-1.5-flash")
+                        model = genai.GenerativeModel("models/gemini-2.5-flash")
                         response = model.generate_content(
                             prompt,
                             generation_config=genai.types.GenerationConfig(
@@ -752,3 +752,4 @@ else:
 
 
  
+
