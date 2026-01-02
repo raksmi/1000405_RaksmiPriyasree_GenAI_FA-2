@@ -425,7 +425,7 @@ Include specific policy names and eligibility criteria.and dont add any bold cha
 def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
     """Safely get response from Gemini API with comprehensive error handling."""
     try:
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel(models/gemini-2.5-flash)
 
         safety_settings = [
             {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
@@ -693,7 +693,7 @@ def main_app():
                             prompt += "\n\n**CRITICAL: Respond ENTIRELY in Tamil. No English words.**"
                         
                         # Note: Changed to gemini-1.5-flash for compatibility
-                        model = genai.GenerativeModel("models/gemini-1.5-flash")
+                        model = genai.GenerativeModel("models/gemini-2.5-flash")
                         response = model.generate_content(
                             prompt,
                             generation_config=genai.types.GenerationConfig(
@@ -752,4 +752,5 @@ else:
 
 
  
+
 
