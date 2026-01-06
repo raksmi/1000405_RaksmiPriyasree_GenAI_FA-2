@@ -634,22 +634,21 @@ with col_left:
                         max_output_tokens=FIXED_MAX_TOKENS,
                     )
                 )
+            advice_text = response.text if response.text else "No response received."
                 
-                advice_text = response.text if response.text else "No response received."
+            st.session_state.farming_advice = advice_text
                 
-                st.session_state.farming_advice = advice_text
+            lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
+            tts = gTTS(text=advice_text, lang=lang_code, slow=False)
+            audio_file = BytesIO()
+            tts.write_to_fp(audio_file)
+            audio_file.seek(0)
+            st.session_state.farming_audio = audio_file.getvalue()
                 
-                lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
-                tts = gTTS(text=advice_text, lang=lang_code, slow=False)
-                audio_file = BytesIO()
-                tts.write_to_fp(audio_file)
-                audio_file.seek(0)
-                st.session_state.farming_audio = audio_file.getvalue()
+            st.success("✅ Advice generated successfully!")
                 
-                st.success("✅ Advice generated successfully!")
-                
-            except Exception as e:
-                st.error(f"❌ Error: {str(e)}")
+         except Exception as e:
+        st.error(f"❌ Error: {str(e)}")
 
 with col_right:
     if 'farming_advice' in st.session_state:
@@ -755,6 +754,7 @@ main_app()
 
 
  
+
 
 
 
