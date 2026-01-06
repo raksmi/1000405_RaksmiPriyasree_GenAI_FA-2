@@ -613,41 +613,46 @@ with col_left:
     
     st.markdown('</div>', unsafe_allow_html=True)
     
-    if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
-        with st.spinner("🌱 Generating advice..."):
-            try:
-                genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
-                prompt = generate_specialized_prompt(
-                    challenge_type,
-                    location,
-                    selected_season,
-                    selected_weather,
-                    extra_info,
-                    st.session_state.language
+if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
+    with st.spinner("🌱 Generating advice..."):
+        try:
+            genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+
+            prompt = generate_specialized_prompt(
+                challenge_type,
+                location,
+                selected_season,
+                selected_weather,
+                extra_info,
+                st.session_state.language
+            )
+
+            model = genai.GenerativeModel("models/gemini-2.5-flash")
+            response = model.generate_content(
+                prompt,
+                generation_config=genai.types.GenerationConfig(
+                    temperature=FIXED_TEMPERATURE,
+                    max_output_tokens=FIXED_MAX_TOKENS,
                 )
-                
-                model = genai.GenerativeModel("models/gemini-2.5-flash")
-                response = model.generate_content(
-                    prompt,
-                    generation_config=genai.types.GenerationConfig(
-                        temperature=FIXED_TEMPERATURE,
-                        max_output_tokens=FIXED_MAX_TOKENS,
-                    )
-                )
-                advice_text = response.text if response.text else "No response received."
-                st.session_state.farming_advice = advice_text
-                
+            )
+
+            advice_text = response.text if response.text else "No response received."
+            st.session_state.farming_advice = advice_text
+
+            # Text-to-Speech
             lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
             tts = gTTS(text=advice_text, lang=lang_code, slow=False)
             audio_file = BytesIO()
             tts.write_to_fp(audio_file)
             audio_file.seek(0)
+
             st.session_state.farming_audio = audio_file.getvalue()
-                
+
             st.success("✅ Advice generated successfully!")
-                
-         except Exception as e:
-        st.error(f"❌ Error: {str(e)}")
+
+        except Exception as e:
+            st.error(f"❌ Error: {str(e)}")
+)}")
 
 with col_right:
     if 'farming_advice' in st.session_state:
@@ -753,6 +758,7 @@ main_app()
 
 
  
+
 
 
 
