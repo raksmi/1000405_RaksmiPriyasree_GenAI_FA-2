@@ -636,7 +636,7 @@ if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=T
                 )
             )
 
-            advice_text = response.text if response.text else "No response received."
+        advice_text = response.text if response.text else "No response received."
             st.session_state.farming_advice = advice_text
 
             # Text-to-Speech
@@ -758,6 +758,7 @@ main_app()
 
 
  
+
 
 
 
