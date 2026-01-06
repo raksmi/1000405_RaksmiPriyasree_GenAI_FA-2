@@ -634,9 +634,8 @@ with col_left:
                         max_output_tokens=FIXED_MAX_TOKENS,
                     )
                 )
-            advice_text = response.text if response.text else "No response received."
-                
-            st.session_state.farming_advice = advice_text
+                advice_text = response.text if response.text else "No response received."
+                st.session_state.farming_advice = advice_text
                 
             lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
             tts = gTTS(text=advice_text, lang=lang_code, slow=False)
@@ -754,6 +753,7 @@ main_app()
 
 
  
+
 
 
 
