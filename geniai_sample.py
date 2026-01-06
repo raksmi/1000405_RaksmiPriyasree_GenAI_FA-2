@@ -664,10 +664,9 @@ with col_right:
         st.markdown('</div>', unsafe_allow_html=True)
 
 with tab2:
-st.markdown('<div class="glass-card">', unsafe_allow_html=True)
-st.subheader("💚 " + get_text('mental_tab'))
-
-st.info(f"✨ {get_text('precision_mode')}")
+    st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+    st.subheader("💚 " + get_text('mental_tab'))
+    st.info(f"✨ {get_text('precision_mode')}")
 
 user_msg = st.text_area(
     get_text('mental_prompt'),
@@ -756,6 +755,7 @@ main_app()
 
 
  
+
 
 
 
