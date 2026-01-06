@@ -1,4 +1,4 @@
-'''import streamlit as st
+"""import streamlit as st
 import google.generativeai as genai
 from gtts import gTTS
 import os
@@ -712,7 +712,7 @@ load_custom_css()
 if not st.session_state.authenticated:
     login_page()
 else:
-    main_app()'''
+    main_app()"""
 
 
 
@@ -1473,6 +1473,7 @@ main_app()
 
 
  
+
 
 
 
