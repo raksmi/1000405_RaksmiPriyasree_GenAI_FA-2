@@ -425,8 +425,7 @@ def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
     {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
     {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
 ]
-
-response = model.generate_content(
+        response = model.generate_content(
     prompt,
     generation_config=genai.types.GenerationConfig(
         temperature=temperature,
@@ -460,8 +459,8 @@ return None
 
 
 def login_page():
-st.markdown('<h1 class="main-title floating">🌾 AgriSoul</h1>', unsafe_allow_html=True)
-st.markdown('<p class="subtitle">Smart Farming Assistant with AI-Powered Guidance</p>', unsafe_allow_html=True)
+    st.markdown('<h1 class="main-title floating">🌾 AgriSoul</h1>', unsafe_allow_html=True)
+    st.markdown('<p class="subtitle">Smart Farming Assistant with AI-Powered Guidance</p>', unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns([1, 2, 1])
 
@@ -522,17 +521,16 @@ with tab2:
     st.markdown('</div>', unsafe_allow_html=True)
 
 def main_app():
-user_data = st.session_state.users[st.session_state.current_user]
-
-st.markdown(f'<h1 class="main-title">{get_text("app_title")}</h1>', unsafe_allow_html=True)
-st.markdown(f'<p class="subtitle">{get_text("subtitle")}</p>', unsafe_allow_html=True)
+    user_data = st.session_state.users[st.session_state.current_user]
+    st.markdown(f'<h1 class="main-title">{get_text("app_title")}</h1>', unsafe_allow_html=True)
+    st.markdown(f'<p class="subtitle">{get_text("subtitle")}</p>', unsafe_allow_html=True)
 
 col1, col2, col3 = st.columns([2, 1, 1])
 with col1:
-st.markdown(f"### {get_text('welcome')}, {user_data['name']}! 👋")
+    st.markdown(f"### {get_text('welcome')}, {user_data['name']}! 👋")
 with col2:
-lang_options = ['English', 'Tamil']
-current_lang = st.selectbox("🌐", lang_options, 
+    lang_options = ['English', 'Tamil']
+    current_lang = st.selectbox("🌐", lang_options, 
                                 index=lang_options.index(st.session_state.language),
                                 key="lang_select")
 if current_lang != st.session_state.language:
@@ -747,6 +745,7 @@ main_app()
 
 
  
+
 
 
 
