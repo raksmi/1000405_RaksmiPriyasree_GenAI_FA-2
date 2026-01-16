@@ -444,8 +444,8 @@ def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
         else:
             return None
         elif candidate.finish_reason == 2:
-        st.warning("⚠️ Gemini: Response blocked or incomplete (possibly safety/max tokens).")
-        return None
+            st.warning("⚠️ Gemini: Response blocked or incomplete (possibly safety/max tokens).")
+            return None
     else:
         st.warning(f"⚠️ Gemini: Finish reason {candidate.finish_reason} -- response may be incomplete.")
         return None
@@ -744,6 +744,7 @@ main_app()
 
 
  
+
 
 
 
