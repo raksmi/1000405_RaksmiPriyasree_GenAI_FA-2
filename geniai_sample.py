@@ -16,13 +16,13 @@ initial_sidebar_state="collapsed"
 )
 
 if 'authenticated' not in st.session_state:
-st.session_state.authenticated = False
+    st.session_state.authenticated = False
 if 'users' not in st.session_state:
-st.session_state.users = {}
+    st.session_state.users = {}
 if 'current_user' not in st.session_state:
-st.session_state.current_user = None
+    st.session_state.current_user = None
 if 'language' not in st.session_state:
-st.session_state.language = 'English'
+    st.session_state.language = 'English'
 
 
 TRANSLATIONS = {
@@ -758,6 +758,7 @@ main_app()
 
 
  
+
 
 
 
