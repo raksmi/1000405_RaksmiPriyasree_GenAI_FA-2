@@ -1,4 +1,3 @@
-
 import streamlit as st
 import google.generativeai as genai
 from gtts import gTTS
@@ -130,12 +129,11 @@ FARMING_CHALLENGES = {
 }
 
 def get_text(key):
-"""Get translated text based on current language"""
-return TRANSLATIONS[st.session_state.language].get(key, key)
+    return TRANSLATIONS[st.session_state.language].get(key, key)
 
 
 def load_custom_css():
-st.markdown("""
+    st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -347,14 +345,11 @@ border-top-color: white !important;
 """, unsafe_allow_html=True)
 
 def hash_password(password):
-return hashlib.sha256(password.encode()).hexdigest()
+    return hashlib.sha256(password.encode()).hexdigest()
 
 def generate_specialized_prompt(challenge_type, location, season, day_type, extra_info, language):
-"""Generate challenge-specific prompts with expertise context"""
-
-base_context = f"Location: {location}\nSeason: {season}\nWeather: {day_type}\nAdditional Context: {extra_info}\n\n"
-
-prompts = {
+    base_context = f"Location: {location}\nSeason: {season}\nWeather: {day_type}\nAdditional Context: {extra_info}\n\n"
+    prompts = {
 'mental_health': f"""You are a compassionate mental health counselor specializing in farmer wellbeing and rural mental health.
 {base_context}
 Provide empathetic, practical mental health guidance for farmers in tamilnadu,india. Include:
@@ -414,23 +409,17 @@ Provide crop insurance guidance including:
 
 Include specific policy names and eligibility criteria.and dont add any bold charecters, in 300 words"""
 }
-
-prompt = prompts.get(challenge_type, prompts['pest_disease'])
-
-if language == 'Tamil':
-prompt += "\n\n**CRITICAL INSTRUCTION: Your ENTIRE response MUST be in Tamil language only. Do not mix English words. Write everything in Tamil script (தமிழில்). Translate all technical terms to Tamil.**"
-else:
-prompt += "only  in english"
-return prompt
+    prompt = prompts.get(challenge_type, prompts['pest_disease'])
+    if language == 'Tamil':
+        prompt += "\n\n**CRITICAL INSTRUCTION: Your ENTIRE response MUST be in Tamil language only. Do not mix English words. Write everything in Tamil script (தமிழில்). Translate all technical terms to Tamil.**"
+    else:
+        prompt += "only  in english"
+        return prompt
 
 def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
-"""
-Safely get response from Gemini API with comprehensive error handling
-"""
-try:
-model = genai.GenerativeModel("gemini-1.5-flash")
-
-safety_settings = [
+    try:
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        safety_settings = [
     {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
     {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
     {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
@@ -758,6 +747,7 @@ main_app()
 
 
  
+
 
 
 
