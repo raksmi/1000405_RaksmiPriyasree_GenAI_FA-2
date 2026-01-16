@@ -652,7 +652,7 @@ if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=T
 
         except Exception as e:
             st.error(f"❌ Error: {str(e)}")
-)}"
+
 
 with col_right:
     if 'farming_advice' in st.session_state:
@@ -758,6 +758,7 @@ main_app()
 
 
  
+
 
 
 
