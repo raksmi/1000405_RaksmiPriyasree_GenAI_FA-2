@@ -434,12 +434,11 @@ def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
     ),
     safety_settings=safety_settings
 )
-
-if response.candidates:
-    candidate = response.candidates[0]
-    if candidate.finish_reason == 1:
-        if hasattr(candidate, "text") and candidate.text:
-            return candidate.text
+        if response.candidates:
+            candidate = response.candidates[0]
+            if candidate.finish_reason == 1:
+                if hasattr(candidate, "text") and candidate.text:
+                    return candidate.text
         elif hasattr(candidate.content, "parts") and candidate.content.parts:
             return candidate.content.parts[0].text
         else:
@@ -745,6 +744,7 @@ main_app()
 
 
  
+
 
 
 
