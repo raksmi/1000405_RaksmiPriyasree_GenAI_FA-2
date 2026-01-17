@@ -441,8 +441,6 @@ def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
                     return candidate.text
         elif hasattr(candidate.content, "parts") and candidate.content.parts:
             return candidate.content.parts[0].text
-        else:
-            return None
         elif candidate.finish_reason == 2:
             st.warning("⚠️ Gemini: Response blocked or incomplete (possibly safety/max tokens).")
             return None
@@ -744,6 +742,7 @@ main_app()
 
 
  
+
 
 
 
