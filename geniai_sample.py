@@ -419,41 +419,24 @@ Include specific policy names and eligibility criteria.and dont add any bold cha
 def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
     try:
         model = genai.GenerativeModel("gemini-1.5-flash")
-        safety_settings = [
-    {"category": "HARM_CATEGORY_HARASSMENT", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_HATE_SPEECH", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_SEXUALLY_EXPLICIT", "threshold": "BLOCK_NONE"},
-    {"category": "HARM_CATEGORY_DANGEROUS_CONTENT", "threshold": "BLOCK_NONE"}
-]
-        response = model.generate_content(
-    prompt,
-    generation_config=genai.types.GenerationConfig(
-        temperature=temperature,
-        max_output_tokens=max_tokens,
-        candidate_count=1,
-    ),
-    safety_settings=safety_settings
-)
-        if response.candidates:
-            candidate = response.candidates[0]
-            if candidate.finish_reason == 1:
-                if hasattr(candidate, "text") and candidate.text:
-                    return candidate.text
-        elif hasattr(candidate.content, "parts") and candidate.content.parts:
-            return candidate.content.parts[0].text
-        elif candidate.finish_reason == 2:
-            st.warning("⚠️ Gemini: Response blocked or incomplete (possibly safety/max tokens).")
-            return None
-    else:
-        st.warning(f"⚠️ Gemini: Finish reason {candidate.finish_reason} -- response may be incomplete.")
-        return None
-else:
-    st.error("❌ Gemini: No valid response received.")
-    return None
-except Exception as e:
-st.error(f"❌ Error from Gemini: {str(e)}")
-return None
 
+        response = model.generate_content(
+            prompt,
+            generation_config=genai.types.GenerationConfig(
+                temperature=temperature,
+                max_output_tokens=max_tokens
+            )
+        )
+
+        if response and response.text:
+            return response.text
+
+        st.warning("⚠️ Gemini returned an empty response")
+        return None
+
+    except Exception as e:
+        st.error(f"❌ Gemini error: {e}")
+        return None
 
 def login_page():
     st.markdown('<h1 class="main-title floating">🌾 AgriSoul</h1>', unsafe_allow_html=True)
@@ -742,6 +725,7 @@ main_app()
 
 
  
+
 
 
 
