@@ -414,7 +414,7 @@ Provide empathetic, practical mental health guidance for farmers in tamilnadu,in
 4. Practical daily wellness habits
 5. Warning signs to watch for and when to seek professional help
 
-Be warm, understanding, and culturally sensitive. and dont add any bold charecters, in 250 words""",
+Be warm, understanding, and culturally sensitive. and dont add any bold charecters, in 200 words.. Use bulletens if needed""",
 
         'pest_disease': f"""You are an expert agricultural entomologist and plant pathologist in tamilnadu,india.
 {base_context}
@@ -426,7 +426,7 @@ Provide precise pest and disease management advice including:
 5. Economic threshold levels
 6. Follow-up monitoring schedule
 
-Be specific about timing, dosages, and safety precautions.and dont add any bold charecters, in 300 words""",
+Be specific about timing, dosages, and safety precautions.and dont add any bold charecters, in 200 words.. Use bulletens if needed""",
 
         'soil_health': f"""You are a soil scientist specializing in sustainable agriculture in tamilnadu,india.
 {base_context}
@@ -438,7 +438,7 @@ Provide comprehensive soil health improvement advice including:
 5. Crop rotation suggestions
 6. Expected timeline for improvements
 
-Prioritize sustainable, cost-effective solutions.and dont add any bold charecters, in 300 words""",
+Prioritize sustainable, cost-effective solutions.and dont add any bold charecters,in 200 words.. Use bulletens if needed""",
 
         'water_efficiency': f"""You are an irrigation specialist and water conservation expert in tamilnadu,india.
 {base_context}
@@ -450,7 +450,7 @@ Provide water optimization strategies including:
 5. Crop-specific water requirements
 6. Cost-benefit analysis of different systems
 
-Focus on practical, implementable solutions for small to medium farmers.and dont add any bold charecters, in 300 words""",
+Focus on practical, implementable solutions for small to medium farmers.and dont add any bold charecters, in 200 words.. Use bulletens if needed""",
 
         'crop_insurance': f"""You are a crop insurance advisor and agricultural economist in tamilnadu,india.
 {base_context}
@@ -462,7 +462,7 @@ Provide crop insurance guidance including:
 5. Government schemes available
 6. Premium vs. coverage analysis
 
-Include specific policy names and eligibility criteria.and dont add any bold charecters, in 300 words"""
+Include specific policy names and eligibility criteria.and dont add any bold charecters,in 200 words.. Use bulletens if needed"""
     }
     prompt = prompts.get(challenge_type, prompts['pest_disease'])
     if language == 'Tamil':
@@ -946,6 +946,7 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
 
