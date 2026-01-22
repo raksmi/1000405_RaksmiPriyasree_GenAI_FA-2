@@ -899,7 +899,7 @@ def main_app():
             if custom_question:
                 with st.spinner("🧠 Analyzing your question and generating comprehensive answer..."):
                     try:
-                        genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
+                        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
                         
                         prompt = generate_structured_custom_prompt(
                             custom_question,
@@ -962,5 +962,6 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
