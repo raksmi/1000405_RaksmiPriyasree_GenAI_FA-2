@@ -823,7 +823,7 @@ def main_app():
             if user_msg:
                 with st.spinner("💭 Processing..."):
                     try:
-                        genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
+                        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
                         
                         prompt = f"""You are a compassionate mental health companion for farmers. 
                         Provide empathetic, supportive, and practical guidance.and dont add any bold charecters, in 250 words
@@ -962,4 +962,5 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
