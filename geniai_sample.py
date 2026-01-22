@@ -481,8 +481,6 @@ def generate_structured_custom_prompt(question, location, language):
 
 **STRUCTURE YOUR RESPONSE AS FOLLOWS:**
 
-📋 **முக்கிய விடை (Main Answer)**
-[Provide a direct, clear answer to the question]
 
 🔍 **விரிவான விளக்கம் (Detailed Explanation)**
 [Break down the answer with step-by-step details]
@@ -492,18 +490,13 @@ def generate_structured_custom_prompt(question, location, language):
 - [Point 2]
 - [Point 3]
 
-⚠️ **எச்சரிக்கைகள் (Precautions)**
-- [Any important warnings or precautions]
-
-📞 **கூடுதல் வளங்கள் (Additional Resources)**
-- [Relevant resources, contacts, or references]
 
 **IMPORTANT:**
 - Write EVERYTHING in Tamil language only
 - Use clear headings and bullet points
 - Keep each section concise and practical
 - Focus on actionable advice for farmers
-- Maximum 400 words total"""
+- Maximum 200 words total"""
     else:
         instruction = """You are an expert agricultural advisor for farmers in Tamil Nadu, India. Provide a comprehensive, well-structured answer to the farmer's question.
 
@@ -919,11 +912,11 @@ def main_app():
                         reply_text = response.text if response.text else "No response received."
                         st.session_state.custom_response = reply_text
                         
-                        # Clean text for TTS (remove formatting)
+                    
                         clean_text = re.sub(r'(\*\*|__)(.*?)\1', r'\2', reply_text)
                         clean_text = re.sub(r'[📋🔍💡⚠️📞]', '', clean_text)
                         
-                        # Text-to-Speech
+                        
                         lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
                         tts = gTTS(text=clean_text, lang=lang_code, slow=False)
                         audio_file = BytesIO()
@@ -943,7 +936,6 @@ def main_app():
             st.markdown('<div class="structured-response">', unsafe_allow_html=True)
             st.subheader(get_text('custom_response'))
             
-            # Display formatted response
             formatted_response = format_structured_response(st.session_state.custom_response)
             st.markdown(formatted_response)
             
@@ -962,6 +954,7 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
 
