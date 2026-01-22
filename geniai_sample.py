@@ -23,6 +23,10 @@ if 'current_user' not in st.session_state:
     st.session_state.current_user = None
 if 'language' not in st.session_state:
     st.session_state.language = 'English'
+if 'custom_response' not in st.session_state:
+    st.session_state.custom_response = None
+if 'custom_audio' not in st.session_state:
+    st.session_state.custom_audio = None
 
 TRANSLATIONS = {
     'English': {
@@ -31,6 +35,7 @@ TRANSLATIONS = {
         'subtitle': 'Helping farmers with region-based advice, local languages, and emotional support 💚',
         'farming_tab': '🌿 Farming Assistant',
         'mental_tab': '🧠 Mental Health Bot',
+        'custom_tab': '❓ Custom Questions',
         'location': '📍 Location',
         'advice_type': '💬 Select Farming Challenge',
         'extra_info': '📝 Additional details',
@@ -52,6 +57,7 @@ TRANSLATIONS = {
         'voice_output': '🔊 Voice Output',
         'advice_response': "🌾 AgriSoul's Expert Advice",
         'mental_response': '💬 AgriSoul Response',
+        'custom_response': '📚 Custom Answer',
         'current_season': '🌤️ Current Season',
         'day_type': '☀️ Current Weather',
         'precision_mode': '✨ Precision Mode Active - Detailed & Accurate Advice',
@@ -63,7 +69,12 @@ TRANSLATIONS = {
         'weather_rainy': 'Rainy',
         'weather_sunny': 'Sunny',
         'weather_cloudy': 'Cloudy',
-        'weather_windy': 'Windy'
+        'weather_windy': 'Windy',
+        'custom_question': '🎯 Ask Your Custom Question',
+        'custom_placeholder': 'Type any farming question here... (e.g., "How to increase tomato yield?", "Best organic fertilizers for rice")',
+        'remember_me': 'Remember Me',
+        'quick_login': 'Quick Demo Login',
+        'demo_hint': 'Tip: Use username "demo" and password "demo123" for quick access'
     },
     'Tamil': {
         'welcome': 'வரவேற்கிறோம்',
@@ -71,6 +82,7 @@ TRANSLATIONS = {
         'subtitle': 'பிராந்திய அடிப்படையிலான ஆலோசனை, உள்ளூர் மொழிகள் மற்றும் உணர்ச்சி ஆதரவுடன் விவசாயிகளுக்கு உதவுதல் 💚',
         'farming_tab': '🌿 விவசாய உதவியாளர்',
         'mental_tab': '🧠 மன நல ஆதரவு',
+        'custom_tab': '❓ தனிப்பயன் கேள்விகள்',
         'location': '📍 இடம்',
         'advice_type': '💬 விவசாய சவாலைத் தேர்ந்தெடுக்கவும்',
         'extra_info': '📝 கூடுதல் விவரங்கள்',
@@ -92,6 +104,7 @@ TRANSLATIONS = {
         'voice_output': '🔊 குரல் வெளியீடு',
         'advice_response': '🌾 அக்ரிசோலின் நிபுணர் ஆலோசனை',
         'mental_response': '💬 அக்ரிசோல் பதில்',
+        'custom_response': '📚 தனிப்பயன் பதில்',
         'current_season': '🌤️ தற்போதைய பருவம்',
         'day_type': '☀️ தற்போதைய வானிலை',
         'precision_mode': '✨ துல்லியமான பயன்முறை செயலில் உள்ளது - விரிவான மற்றும் துல்லியமான ஆலோசனை',
@@ -103,7 +116,12 @@ TRANSLATIONS = {
         'weather_rainy': 'மழை',
         'weather_sunny': 'வெயில்',
         'weather_cloudy': 'மேகமூட்டம்',
-        'weather_windy': 'காற்று'
+        'weather_windy': 'காற்று',
+        'custom_question': '🎯 உங்கள் தனிப்பயன் கேள்வியைக் கேளுங்கள்',
+        'custom_placeholder': 'இங்கே எந்த விவசாய கேள்வியையும் தட்டச்சு செய்யவும்...',
+        'remember_me': 'என்னை நினைவில் வை',
+        'quick_login': 'விரைவு டெமோ உள்நுழைவு',
+        'demo_hint': 'உதவி: பயனர்பெயர் "demo" மற்றும் கடவுச்சொல் "demo123" ஐ விரைவான அணுகலுக்கு பயன்படுத்தவும்'
     }
 }
 
@@ -303,25 +321,21 @@ audio {
     border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Style for markdown text in cards */
 .glass-card p, .glass-card li {
     color: #f0f9f4;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Style for labels */
 label {
     color: #ffffff !important;
     font-weight: 600 !important;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-/* Horizontal rule */
 hr {
     border-color: rgba(255, 255, 255, 0.3);
 }
 
-/* Caption text */
 .css-1629p8f, .css-10trblm {
     color: #e0f5ea !important;
 }
@@ -335,9 +349,44 @@ hr {
     animation: float 3s ease-in-out infinite;
 }
 
-/* Spinner */
 .stSpinner > div {
     border-top-color: white !important;
+}
+
+/* Structured Response Styles */
+.structured-response {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 15px 0;
+}
+
+.structured-response h4 {
+    color: #e0f5ea;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.structured-response ul {
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.structured-response li {
+    color: #f0f9f4;
+    margin-bottom: 8px;
+    line-height: 1.6;
+}
+
+.structured-response strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.structured-response p {
+    color: #f0f9f4;
+    margin-bottom: 10px;
+    line-height: 1.6;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -414,6 +463,86 @@ Include specific policy names and eligibility criteria.and dont add any bold cha
         prompt += "only  in english"
     return prompt
 
+def generate_structured_custom_prompt(question, location, language):
+    """Generate prompt for custom questions with structured output requirements"""
+    
+    base_context = f"Farmer's Question: {question}\nLocation: {location}\n"
+    
+    if language == 'Tamil':
+        instruction = """You are an expert agricultural advisor for farmers in Tamil Nadu, India. Provide a comprehensive, well-structured answer to the farmer's question.
+
+**STRUCTURE YOUR RESPONSE AS FOLLOWS:**
+
+📋 **முக்கிய விடை (Main Answer)**
+[Provide a direct, clear answer to the question]
+
+🔍 **விரிவான விளக்கம் (Detailed Explanation)**
+[Break down the answer with step-by-step details]
+
+💡 **முக்கிய குறிப்புகள் (Key Points)**
+- [Point 1]
+- [Point 2]
+- [Point 3]
+
+⚠️ **எச்சரிக்கைகள் (Precautions)**
+- [Any important warnings or precautions]
+
+📞 **கூடுதல் வளங்கள் (Additional Resources)**
+- [Relevant resources, contacts, or references]
+
+**IMPORTANT:**
+- Write EVERYTHING in Tamil language only
+- Use clear headings and bullet points
+- Keep each section concise and practical
+- Focus on actionable advice for farmers
+- Maximum 400 words total"""
+    else:
+        instruction = """You are an expert agricultural advisor for farmers in Tamil Nadu, India. Provide a comprehensive, well-structured answer to the farmer's question.
+
+**STRUCTURE YOUR RESPONSE AS FOLLOWS:**
+
+📋 **Main Answer**
+[Provide a direct, clear answer to the question]
+
+🔍 **Detailed Explanation**
+[Break down the answer with step-by-step details]
+
+💡 **Key Points**
+- [Point 1]
+- [Point 2] 
+- [Point 3]
+
+⚠️ **Precautions**
+- [Any important warnings or precautions]
+
+📞 **Additional Resources**
+- [Relevant resources, contacts, or references]
+
+**IMPORTANT:**
+- Use clear headings and bullet points
+- Keep each section concise and practical
+- Focus on actionable advice for farmers
+- Maximum 400 words total
+- Do not use any bold formatting (no ** or __)"""
+    
+    return base_context + "\n" + instruction
+
+def format_structured_response(response_text):
+    """Format the structured response with proper styling"""
+    
+    # Add section markers for styling
+    formatted = response_text
+    
+    # Style section headings
+    if '📋' in formatted or 'Main Answer' in formatted or 'முக்கிய விடை' in formatted:
+        formatted = formatted.replace('📋', '### 📋')
+        formatted = formatted.replace('🔍', '### 🔍')
+        formatted = formatted.replace('💡', '### 💡')
+        formatted = formatted.replace('⚠️', '### ⚠️')
+        formatted = formatted.replace('📞', '### 📞')
+    
+    return formatted
+
 def get_gemini_response(prompt, temperature=0.3, max_tokens=1500):
     try:
         model = genai.GenerativeModel("gemini-1.5-flash")
@@ -440,6 +569,9 @@ def login_page():
     st.markdown('<h1 class="main-title floating">🌾 AgriSoul</h1>', unsafe_allow_html=True)
     st.markdown('<p class="subtitle">Smart Farming Assistant with AI-Powered Guidance</p>', unsafe_allow_html=True)
 
+    # Demo hint
+    st.info(get_text('demo_hint'))
+
     col1, col2, col3 = st.columns([1, 2, 1])
 
     with col2:
@@ -448,19 +580,48 @@ def login_page():
         with tab1:
             st.markdown('<div class="glass-card">', unsafe_allow_html=True)
             st.markdown("### " + get_text('login'))
+            
             username = st.text_input(get_text('username'), key="login_user")
             password = st.text_input(get_text('password'), type="password", key="login_pass")
             
-            if st.button(get_text('login'), key="login_btn"):
-                hashed_pw = hash_password(password)
-                if username in st.session_state.users and st.session_state.users[username]['password'] == hashed_pw:
+            # Remember Me checkbox
+            remember = st.checkbox(get_text('remember_me'), key="remember_me")
+            
+            col_login, col_demo = st.columns([2, 1])
+            
+            with col_login:
+                if st.button(get_text('login'), key="login_btn", use_container_width=True):
+                    hashed_pw = hash_password(password)
+                    if username in st.session_state.users and st.session_state.users[username]['password'] == hashed_pw:
+                        st.session_state.authenticated = True
+                        st.session_state.current_user = username
+                        st.session_state.language = st.session_state.users[username].get('language', 'English')
+                        st.success(f"{get_text('welcome')}, {st.session_state.users[username]['name']}!")
+                        st.rerun()
+                    else:
+                        st.error("Invalid credentials! Please try again or use demo account.")
+            
+            with col_demo:
+                if st.button(get_text('quick_login'), key="demo_btn", use_container_width=True):
+                    # Create demo user if not exists
+                    if 'demo' not in st.session_state.users:
+                        st.session_state.users['demo'] = {
+                            'name': 'Demo Farmer',
+                            'age': 35,
+                            'district': 'Madurai',
+                            'state': 'Tamil Nadu',
+                            'farm_size': 5.0,
+                            'crops': 'Rice, Tomato',
+                            'language': 'English',
+                            'password': hash_password('demo123')
+                        }
+                    
                     st.session_state.authenticated = True
-                    st.session_state.current_user = username
-                    st.session_state.language = st.session_state.users[username].get('language', 'English')
-                    st.success(f"{get_text('welcome')}, {st.session_state.users[username]['name']}!")
+                    st.session_state.current_user = 'demo'
+                    st.session_state.language = 'English'
+                    st.success(f"{get_text('welcome')}, Demo Farmer! 👋")
                     st.rerun()
-                else:
-                    st.error("Invalid credentials!")
+            
             st.markdown('</div>', unsafe_allow_html=True)
 
         with tab2:
@@ -481,7 +642,7 @@ def login_page():
             reg_username = st.text_input(get_text('username'), key="reg_user")
             reg_password = st.text_input(get_text('password'), type="password", key="reg_pass")
             
-            if st.button(get_text('register'), key="reg_btn"):
+            if st.button(get_text('register'), key="reg_btn", use_container_width=True):
                 if reg_username and reg_password and reg_name:
                     st.session_state.users[reg_username] = {
                         'name': reg_name,
@@ -493,9 +654,9 @@ def login_page():
                         'language': reg_lang,
                         'password': hash_password(reg_password)
                     }
-                    st.success("Registration successful! Please login.")
+                    st.success("✅ Registration successful! Please login.")
                 else:
-                    st.error("Please fill all required fields!")
+                    st.error("❌ Please fill all required fields!")
             st.markdown('</div>', unsafe_allow_html=True)
 
 def main_app():
@@ -522,7 +683,7 @@ def main_app():
 
     st.markdown("---")
 
-    tab1, tab2 = st.tabs([get_text('farming_tab'), get_text('mental_tab')])
+    tab1, tab2, tab3 = st.tabs([get_text('farming_tab'), get_text('mental_tab'), get_text('custom_tab')])
 
     with tab1:
         st.info(f"✨ {get_text('precision_mode')}")
@@ -581,7 +742,7 @@ def main_app():
             if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
                 with st.spinner("🌱 Generating advice..."):
                     try:
-                        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
+                        genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
 
                         prompt = generate_specialized_prompt(
                             challenge_type,
@@ -642,7 +803,7 @@ def main_app():
 
         if st.button(get_text('send'), key="send_mental_btn", use_container_width=True):
             if user_msg:
-                with st.spinner("💭 don't worry..."):
+                with st.spinner("💭 Processing..."):
                     try:
                         genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
                         
@@ -693,6 +854,86 @@ def main_app():
             
             st.subheader(get_text('voice_output'))
             st.audio(st.session_state.mental_audio, format='audio/mp3')
+            st.caption(f"🎙️ Generated in {st.session_state.language}")
+
+        st.markdown('</div>', unsafe_allow_html=True)
+
+    with tab3:
+        # Custom Questions Tab
+        st.markdown('<div class="glass-card">', unsafe_allow_html=True)
+        st.subheader(get_text('custom_tab'))
+        st.info(f"✨ {get_text('precision_mode')}")
+
+        custom_location = st.text_input(
+            get_text('location'),
+            value=f"{user_data['district']}, {user_data['state']}",
+            key="custom_location"
+        )
+
+        custom_question = st.text_area(
+            get_text('custom_question'),
+            placeholder=get_text('custom_placeholder'),
+            height=120,
+            key="custom_question_input"
+        )
+
+        if st.button("🚀 Get Structured Answer", key="custom_answer_btn", use_container_width=True):
+            if custom_question:
+                with st.spinner("🧠 Analyzing your question and generating comprehensive answer..."):
+                    try:
+                        genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
+                        
+                        prompt = generate_structured_custom_prompt(
+                            custom_question,
+                            custom_location,
+                            st.session_state.language
+                        )
+                        
+                        model = genai.GenerativeModel("models/gemini-2.5-flash")
+                        response = model.generate_content(
+                            prompt,
+                            generation_config=genai.types.GenerationConfig(
+                                temperature=0.3,
+                                max_output_tokens=3000,
+                            )
+                        )
+                        
+                        reply_text = response.text if response.text else "No response received."
+                        st.session_state.custom_response = reply_text
+                        
+                        # Clean text for TTS (remove formatting)
+                        clean_text = re.sub(r'(\*\*|__)(.*?)\1', r'\2', reply_text)
+                        clean_text = re.sub(r'[📋🔍💡⚠️📞]', '', clean_text)
+                        
+                        # Text-to-Speech
+                        lang_code = 'ta' if st.session_state.language == 'Tamil' else 'en'
+                        tts = gTTS(text=clean_text, lang=lang_code, slow=False)
+                        audio_file = BytesIO()
+                        tts.write_to_fp(audio_file)
+                        audio_file.seek(0)
+                        st.session_state.custom_audio = audio_file.getvalue()
+                        
+                        st.success("✅ Comprehensive answer generated!")
+                        
+                    except Exception as e:
+                        st.error(f"❌ Error: {str(e)}")
+            else:
+                st.warning("⚠️ Please enter your question first.")
+
+        if 'custom_response' in st.session_state:
+            st.markdown("---")
+            st.markdown('<div class="structured-response">', unsafe_allow_html=True)
+            st.subheader(get_text('custom_response'))
+            
+            # Display formatted response
+            formatted_response = format_structured_response(st.session_state.custom_response)
+            st.markdown(formatted_response)
+            
+            st.markdown('</div>', unsafe_allow_html=True)
+            
+            st.markdown("---")
+            st.subheader(get_text('voice_output'))
+            st.audio(st.session_state.custom_audio, format='audio/mp3')
             st.caption(f"🎙️ Generated in {st.session_state.language}")
 
         st.markdown('</div>', unsafe_allow_html=True)
