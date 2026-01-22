@@ -502,8 +502,6 @@ def generate_structured_custom_prompt(question, location, language):
 
 **STRUCTURE YOUR RESPONSE AS FOLLOWS:**
 
-📋 **Main Answer**
-[Provide a direct, clear answer to the question]
 
 🔍 **Detailed Explanation**
 [Break down the answer with step-by-step details]
@@ -513,17 +511,11 @@ def generate_structured_custom_prompt(question, location, language):
 - [Point 2] 
 - [Point 3]
 
-⚠️ **Precautions**
-- [Any important warnings or precautions]
-
-📞 **Additional Resources**
-- [Relevant resources, contacts, or references]
-
 **IMPORTANT:**
 - Use clear headings and bullet points
 - Keep each section concise and practical
 - Focus on actionable advice for farmers
-- Maximum 400 words total
+- Maximum 200 words total
 - Do not use any bold formatting (no ** or __)"""
     
     return base_context + "\n" + instruction
@@ -595,7 +587,7 @@ def login_page():
             username = st.text_input(get_text('username'), key="login_user")
             password = st.text_input(get_text('password'), type="password", key="login_pass")
             
-            # Remember Me checkbox
+            
             remember = st.checkbox(get_text('remember_me'), key="remember_me")
             
             col_login, col_demo = st.columns([2, 1])
@@ -954,6 +946,7 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
 
 
 
