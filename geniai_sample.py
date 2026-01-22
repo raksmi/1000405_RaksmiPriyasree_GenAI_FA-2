@@ -760,7 +760,7 @@ def main_app():
             if st.button(get_text('get_advice'), key="get_advice_btn", use_container_width=True):
                 with st.spinner("🌱 Generating advice..."):
                     try:
-                        genai.configure(api_key="AIzaSyA4O1PoIJtYlJfVqHnSEODRfbvWAmMwAPI")
+                        genai.configure(api_key=st.secrets["GOOGLE_API_KEY"])
 
                         prompt = generate_specialized_prompt(
                             challenge_type,
@@ -962,3 +962,4 @@ if not st.session_state.authenticated:
     login_page()
 else:
     main_app()
+
