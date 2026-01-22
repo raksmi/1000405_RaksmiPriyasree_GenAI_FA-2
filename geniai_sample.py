@@ -27,6 +27,14 @@ if 'custom_response' not in st.session_state:
     st.session_state.custom_response = None
 if 'custom_audio' not in st.session_state:
     st.session_state.custom_audio = None
+if 'farming_advice' not in st.session_state:
+    st.session_state.farming_advice = None
+if 'farming_audio' not in st.session_state:
+    st.session_state.farming_audio = None
+if 'mental_response' not in st.session_state:
+    st.session_state.mental_response = None
+if 'mental_audio' not in st.session_state:
+    st.session_state.mental_audio = None
 
 TRANSLATIONS = {
     'English': {
@@ -530,6 +538,16 @@ def generate_structured_custom_prompt(question, location, language):
 def format_structured_response(response_text):
     """Format the structured response with proper styling"""
     
+    # Ensure response_text is a string
+    if response_text is None:
+        return "No response available."
+    
+    if not isinstance(response_text, str):
+        try:
+            response_text = str(response_text)
+        except Exception as e:
+            return f"Error formatting response: {str(e)}"
+    
     # Add section markers for styling
     formatted = response_text
     
@@ -779,7 +797,7 @@ def main_app():
                         st.error(f"❌ Error: {str(e)}")
 
         with col_right:
-            if 'farming_advice' in st.session_state:
+            if 'farming_advice' in st.session_state and st.session_state.farming_advice:
                 st.markdown('<div class="glass-card">', unsafe_allow_html=True)
                 st.subheader(get_text('advice_response'))
                 st.markdown(st.session_state.farming_advice)
@@ -847,7 +865,7 @@ def main_app():
                     except Exception as e:
                         st.error(f"❌ Error: {str(e)}")
 
-        if 'mental_response' in st.session_state:
+        if 'mental_response' in st.session_state and st.session_state.mental_response:
             st.markdown("---")
             st.subheader(get_text('mental_response'))
             st.success(st.session_state.mental_response)
@@ -920,7 +938,7 @@ def main_app():
             else:
                 st.warning("⚠️ Please enter your question first.")
 
-        if 'custom_response' in st.session_state:
+        if 'custom_response' in st.session_state and st.session_state.custom_response:
             st.markdown("---")
             st.markdown('<div class="structured-response">', unsafe_allow_html=True)
             st.subheader(get_text('custom_response'))
